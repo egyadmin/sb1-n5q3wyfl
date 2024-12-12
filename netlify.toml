@@ -1,0 +1,38 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "18"
+  VITE_GOOGLE_MAPS_API_KEY = "AIzaSyDqJ1ESgKqzL7P_qR-_VzB4E7dKh-nUgBE"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = """
+      default-src 'self';
+      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.googleapis.com https://*.gstatic.com https://unpkg.com;
+      style-src 'self' 'unsafe-inline' https://*.googleapis.com https://*.gstatic.com https://fonts.googleapis.com;
+      img-src 'self' data: https://*.googleapis.com https://*.gstatic.com https://*.google.com https://*.openstreetmap.org https://unpkg.com https://images.unsplash.com;
+      font-src 'self' https://*.gstatic.com https://fonts.gstatic.com;
+      connect-src 'self' https://*.googleapis.com https://*.gstatic.com https://*.openstreetmap.org https://attendance-1.netlify.app;
+      frame-src 'self' https://*.google.com https://attendance-1.netlify.app;
+      object-src 'none';
+      base-uri 'self';
+      form-action 'self';
+      frame-ancestors 'none';
+      upgrade-insecure-requests;
+    """
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=self"
+
+[context.production.environment]
+  VITE_GOOGLE_MAPS_API_KEY = "AIzaSyDqJ1ESgKqzL7P_qR-_VzB4E7dKh-nUgBE"
